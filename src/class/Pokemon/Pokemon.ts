@@ -4,21 +4,19 @@ import { Utility } from "../../util/Utility";
 
 export class Pokemon {
     protected name: string;
-    protected level: number;
-    protected hp: number;
+    protected level: number = 1;
+    hp: number = 50;
+    mp: number = 50;
     protected pokeType: PokeType;
     protected pocket: Pocket | undefined;
-    protected isAlive: boolean;
+    protected isAlive: boolean = true;
     protected dmg: number
     protected def: number
     protected currentAction: BattleAction
 
-    constructor(name: string, level: number, hp: number, pokeType: PokeType, pocket?: Pocket) {
+    constructor(name: string, pokeType: PokeType, pocket?: Pocket) {
         this.name = name;
-        this.level = level;
-        this.hp = hp;
         this.pokeType = pokeType;
-        this.isAlive = true;
         this.dmg = 0;
         this.def = 0;
         this.currentAction = BattleAction.StandBy

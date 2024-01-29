@@ -1,10 +1,14 @@
 <script context="module" lang="ts">
-    	import type { MouseEventHandler } from "svelte/elements";
+  import type { MouseEventHandler } from "svelte/elements";
+  import { goto } from "$app/navigation";
+  import { writable, type Writable } from "svelte/store";
+  import { myUser } from "../../util/Store"
+  import { User } from "../../class/User";
 </script>
 
 <script lang="ts">
     let userName: string = '';
-    let gender: string; // 'male' or 'female'
+    let gender: string = ''; // 'male' or 'female'
 
     function toggleWindow(windowName: string): MouseEventHandler<HTMLButtonElement> {
         return (event) => {
@@ -12,12 +16,18 @@
             if (elements) {
                 elements.style.display = elements.style.display === 'none' ? 'block' : 'none';
             }
-            const elseElements = document.getElementById("userSex")
+            const elseElements = document.getElementById("userSexContainer")
             if (elseElements) {
                 elseElements.style.display = "block";
             }
         };
     }
+
+    function makeUserObj(): void{
+      myUser.set(new User(userName, gender))
+      goto(`/selectpoke`);
+    }
+
 </script>
 
 <div id="userName">
@@ -27,16 +37,26 @@
     <button on:click={toggleWindow("userName")}>다음</button>
 </div>
 
-<div id="userSex" style="display: none;">
-    <h1>반갑다 {userName}! 너는 남자아이... 아니 여자아이 같은데....?</h1>
-    <input type="radio" name="gender" bind:group={gender} value="male">남자
-    <input type="radio" name="gender" bind:group={gender} value="female">여자
-    <h3>{gender? (gender == "male" ? "남자" : "여자") : "저는..."}에요.</h3>
-    <button on:click={toggleWindow("userSex")}>다음</button>
+<div id="userSexContainer" style="display: none;">
+  <div id="userSex">
+      <h1>반갑다 {userName}! 너는 남자아이... 아니 여자아이 같은데....?</h1>
+      <div style="display: flex; flex-direction: row; justify-content: center">
+        <div class="radioBox">
+          <div>남자</div>
+          <input type="radio" name="gender" bind:group={gender} value="male" style="margin-top: 0;">
+        </div>
+        <div class="radioBox">
+          <div>여자</div>
+          <input type="radio" name="gender" bind:group={gender} value="female" style="margin-top: 0;">
+        </div>        
+      </div>
+      <h3>{gender? (gender == "male" ? "남자" : "여자") : "저는..."}에요.</h3>
+      <button on:click={makeUserObj}>다음</button>
+  </div>
 </div>
 
 <style>
-    div {
+    #userName, #userSex {
       display: flex;
       flex-direction: column;
       margin-top: 300px;
@@ -58,5 +78,11 @@
       margin-top: 50px;
       height: 45px;
       width: 200px;
+    }
+
+    .radioBox {
+      display: flex; 
+      flex-direction: column; 
+      align-items: center;
     }
 </style>

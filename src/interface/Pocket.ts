@@ -1,4 +1,6 @@
+import type { Item } from "../class/Item/Item";
+
 export interface Pocket{
-    item: { [key: string]: number };
+    item: Array<Item>
     gold: number;
 }

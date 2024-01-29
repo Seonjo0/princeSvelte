@@ -2,7 +2,7 @@
     import { goto } from '$app/navigation';
   
     export function changeToInit() {
-      goto('/Init');
+      goto('/init');
     }
   </script>
   
