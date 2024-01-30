@@ -6,7 +6,7 @@ import { PotionCategory, type ItemName } from "../type/Type";
 export class User{
     name: string;
     private sex: string;
-    private myPoke?: Pokemon
+    private myPoke?: Array<Pokemon>
     private pocket: Pocket
 
     constructor(name: string, sex: string){
@@ -18,8 +18,20 @@ export class User{
         }
     }
 
-    getPokemon(pokemon: Pokemon){
-        this.myPoke = pokemon;
+    setPokemon(pokemon: Pokemon): void {
+        if (!this.myPoke) {
+            this.myPoke = [pokemon];
+        } else {
+            this.myPoke.push(pokemon);
+        }
+    }
+
+    getPokemon(index: number): Pokemon | undefined {
+        if (this.myPoke && index < this.myPoke.length) {
+            return this.myPoke[index];
+        } else {
+            return undefined;
+        }
     }
 
     getItem(item: string, count: number) {
@@ -29,7 +41,4 @@ export class User{
             this.pocket.item = { ...this.pocket.item, [item]: count };
         }
     }
-
-
-
 }

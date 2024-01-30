@@ -2,7 +2,14 @@ export enum PokeType {
     "Electric",
     "Water",
     "Fire",
-    "Grass"
+    "Grass",
+    "Stone"
+}
+
+export enum PokePic {
+    "Electric" = "img/pika.png",
+    "Water" = "img/kkobu.png",
+    "Stone" = "img/longstone.png"
 }
 
 export enum BattleAction {
@@ -10,7 +17,8 @@ export enum BattleAction {
     "Attack",
     "Defend",
     "Evade",
-    "Run"
+    "Run",
+    "UseItem"
 }
 
 export enum ActionProbability{

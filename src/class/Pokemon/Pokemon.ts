@@ -3,8 +3,8 @@ import { BattleAction, type PokeType } from "../../type/Type";
 import { Utility } from "../../util/Utility";
 
 export class Pokemon {
-    protected name: string;
-    protected level: number = 1;
+    name: string;
+    level: number = 1;
     hp: number = 50;
     mp: number = 50;
     protected pokeType: PokeType;
@@ -12,7 +12,8 @@ export class Pokemon {
     protected isAlive: boolean = true;
     protected dmg: number
     protected def: number
-    protected currentAction: BattleAction
+    currentAction: BattleAction
+    imageUrl: string = ""
 
     constructor(name: string, pokeType: PokeType, pocket?: Pocket) {
         this.name = name;
@@ -22,12 +23,11 @@ export class Pokemon {
         this.currentAction = BattleAction.StandBy
     }
 
-    protected attack(enemyPoke: Pokemon): void {
+    attack(enemyPoke: Pokemon): void {
         enemyPoke.damaged(this)
-
     }
 
-    protected damaged(attacker: Pokemon): void {
+    damaged(attacker: Pokemon): void {
         let damage = attacker.dmg;
         if(this.currentAction === BattleAction.Defend){
             damage = (attacker.dmg - (this.def));
@@ -53,15 +53,19 @@ export class Pokemon {
         this.hp = calculatedHp <= 0 ? 0 : calculatedHp;
     }
 
-    protected defend(): void {
+    defend(): void {
         this.currentAction = BattleAction.Defend;
     }
 
-    protected evade(): void {
+    evade(): void {
         this.currentAction = BattleAction.Evade;
     }
 
-    protected run(): void {
+    run(): void {
         this.currentAction = BattleAction.Run;
+    }
+
+    useItem(name: string): void {
+        this.currentAction = BattleAction.UseItem;
     }
 }
