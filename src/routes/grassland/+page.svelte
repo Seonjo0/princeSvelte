@@ -33,6 +33,7 @@
 
     $: if (clientPokemon && rivalPokemon) {
         if (clientPokemon.currentAction != BattleAction.StandBy || rivalPokemon.currentAction != BattleAction.StandBy) {
+            console.log(clientPokemon.currentAction, rivalPokemon.currentAction)
             keepGoingGame = battleManager.manageBattle(clientPokemon, rivalPokemon);
         }
     }
@@ -50,8 +51,26 @@
             clientPokemon.currentAction = parseInt(target.value) as BattleAction;
         }
         if (rivalPokemon){
-            rivalPokemon.currentAction = BattleAction.Attack;
+            enemyPokeAction(rivalPokemon)
         }
+        
+    }
+
+    function enemyPokeAction(enemy: Pokemon): void {
+        const randomMath = ((Math.random())*10) + 1
+        if (randomMath < 4){
+            enemy.currentAction = BattleAction.Attack;
+        }
+        else if (randomMath < 7){
+            enemy.currentAction = BattleAction.Defend;
+        }
+        else if (randomMath < 10){
+            enemy.currentAction = BattleAction.Evade;
+        }
+        else if (randomMath == 10){
+            enemy.currentAction = BattleAction.Run;
+        }
+        console.log("적의 행동은", enemy.currentAction)
     }
 
 </script>
